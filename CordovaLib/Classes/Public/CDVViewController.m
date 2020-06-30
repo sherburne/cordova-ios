@@ -517,6 +517,12 @@
 
 - (void)createLaunchView
 {
+    // (#929) Per Cordova documentation, don't instantiate the splash screen
+    // if SplashScreenDelay and FadeSplashScreenDuration are both zero...
+    CGFloat splashScreenDelay = [self.settings cordovaFloatSettingForKey:@"SplashScreenDelay" defaultValue:0];
+    CGFloat fadeSplashScreenDuration = [self.settings cordovaFloatSettingForKey:@"FadeSplashScreenDuration" defaultValue:250];
+    if (splashScreenDelay == 0 && fadeSplashScreenDuration == 0) {return;}
+    
     CGRect webViewBounds = self.view.bounds;
     webViewBounds.origin = self.view.bounds.origin;
 
